@@ -1,4 +1,3 @@
-
 require 'casclient'
 
 module RubyCAS
@@ -301,7 +300,7 @@ module RubyCAS
           
           begin
             required_sess_store = ActiveRecord::SessionStore
-            current_sess_store  = ActionController::Base.session_store
+            current_sess_store  = ActiveRecord::SessionStore
           rescue NameError
             # for older versions of Rails (prior to 2.3)
             required_sess_store = CGI::Session::ActiveRecordStore
