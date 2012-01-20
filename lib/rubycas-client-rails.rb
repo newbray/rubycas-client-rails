@@ -10,8 +10,8 @@ module RubyCAS
   end
   
   class Filter
-    cattr_reader :config, :log, :client
-    
+    cattr_reader :log, :client
+    cattr_accessor :config # allow config to be changed at runtime
     # These are initialized when you call setup.
     @@client = nil
     @@log = nil
