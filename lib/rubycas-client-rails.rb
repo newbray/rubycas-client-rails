@@ -426,7 +426,7 @@ module RubyCAS
   
   class AlwaysAuthenticateFilter < Filter
     def authenticate_on_every_request?
-        return true unless @@config[:authenticate_on_every_request] == false
+        return true
     end
   end
   
