@@ -58,7 +58,7 @@ module RubyCAS
           st = last_st
           is_new_session = false
         elsif last_st &&
-            !config[:authenticate_on_every_request] && 
+            !authenticate_on_every_request? && 
             controller.session[client.username_session_key]
           # Re-use the previous ticket if the user already has a local CAS session (i.e. if they were already
           # previously authenticated for this service). This is to prevent redirection to the CAS server on every
@@ -165,6 +165,10 @@ module RubyCAS
       
       def use_gatewaying?
         @@config[:use_gatewaying]
+      end
+      
+      def authenticate_on_every_request?
+        @@config[:authenticate_on_every_request]
       end
       
       # Returns the login URL for the current controller. 
@@ -413,11 +417,17 @@ module RubyCAS
         return "#{Rails.root}/tmp/sessions/cas_sess.#{st}"
       end
     end
-    
-    class GatewayFilter < Filter
-      def self.use_gatewaying?
-        return true unless @@config[:use_gatewaying] == false
-      end
+  end
+  class GatewayFilter < Filter
+    def self.use_gatewaying?
+      return true unless @@config[:use_gatewaying] == false
     end
   end
+  
+  class AlwaysAuthenticateFilter < Filter
+    def authenticate_on_every_request?
+        return true unless @@config[:authenticate_on_every_request] == false
+    end
+  end
+  
 end
