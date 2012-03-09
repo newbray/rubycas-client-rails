@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.date = %q{2011-01-26}
   s.description = %q{Rails plugin for using the RubyCAS-Client as a controller filter.}
   s.email = %q{matt dot zukowski at utoronto dot ca}
-  s.files = `git ls-files`.split("\n")
+  s.files = Dir['lib/**/*.rb']
   s.homepage = %q{http://rubycas-client.rubyforge.org}
   s.rdoc_options = ["--main", "README.txt"]
   s.require_paths = ["lib"]
