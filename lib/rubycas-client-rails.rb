@@ -235,6 +235,15 @@ module RubyCAS
         controller.send(:redirect_to, client.logout_url(referer))
       end
       
+      # to enable cas server to redirect back to service
+      def gateway_logout(controller, service = nil)
+        referer = service || controller.request.referer
+        st = controller.session[:cas_last_valid_ticket]
+        delete_service_session_lookup(st) if st
+        controller.send(:reset_session)
+        controller.send(:redirect_to, client.logout_url(referer) + '&gateway=1')
+      end
+      
       def unauthorized!(controller, vr = nil)
         if controller.params[:format] == "xml"
           if vr
